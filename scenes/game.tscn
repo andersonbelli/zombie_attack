@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://04gvsrrf3mix"]
+
+[ext_resource type="Texture2D" uid="uid://bid8al1ax388q" path="res://assets/background.png" id="1_561u7"]
+[ext_resource type="PackedScene" uid="uid://nm76qp1n6ikq" path="res://scenes/player.tscn" id="2_3n2to"]
+[ext_resource type="PackedScene" uid="uid://cyg5mmus6dbvj" path="res://scenes/enemy.tscn" id="3_6dgqx"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b6rhq"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2mrmb"]
+
+[node name="Game" type="Node2D"]
+position = Vector2(264, 386)
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(2.76004, -25.2)
+scale = Vector2(1.01393, 1.00222)
+texture = ExtResource("1_561u7")
+
+[node name="player" parent="." instance=ExtResource("2_3n2to")]
+position = Vector2(136, 243)
+
+[node name="enemy" parent="." instance=ExtResource("3_6dgqx")]
+position = Vector2(-261, -47)
+
+[node name="wall" type="StaticBody2D" parent="."]
+position = Vector2(34, 301)
+
+[node name="bottom" type="CollisionShape2D" parent="wall"]
+position = Vector2(22, 33)
+shape = SubResource("WorldBoundaryShape2D_b6rhq")
+
+[node name="right" type="CollisionShape2D" parent="wall"]
+position = Vector2(240, -100)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_2mrmb")
+
+[node name="left" type="CollisionShape2D" parent="wall"]
+position = Vector2(-150, -64)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_2mrmb")
