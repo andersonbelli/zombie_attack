@@ -10,7 +10,6 @@ func _ready():
 
 func _physics_process(delta):
 	bullet = Bullet.instantiate()
-	print("player: " + str(self.rotation_degrees))
 
 func _process(delta):
 	
@@ -18,13 +17,6 @@ func _process(delta):
 	look_at(mouse_position)
 	
 	if Input.is_action_pressed("shoot"):
-		#var bullet = Bullet.instantiate()
-		
-		
-		# bullet.rotation_degrees = position.angle_to(mouse_position)
-		
-		# bullet.rotate(position.angle())
-		
 		var button_angle = position.angle_to(mouse_position)
 		var player_rotation = rotation
 		var player_rotation_degress = rotation_degrees
@@ -35,16 +27,13 @@ func _process(delta):
 		var _rotation3 = mouse_position
 		var _rotation4 = mouse_position.x
 		
-		bullet.position = position
-		bullet.rotation_degrees = rotation_degrees
-		
-		
+		bullet.position = $AnimatedSprite2D/Marker2D.position
 		#bullet.rotation_degrees = rotation_degrees
-		#bullet.get_angle_to(mouse_position)
+		bullet.rotation_degrees = global_rotation
 		
-		var direction = global_position.direction_to(mouse_position) # this is a unit vector (length 1)
+		var direction = global_position.direction_to(mouse_position)
 		var impulse = direction * 100
 		bullet.add_constant_central_force(impulse)
 		
-		owner.add_child(bullet)
-		
+		#owner.add_child(bullet)
+		add_child(bullet)

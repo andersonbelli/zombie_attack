@@ -203,15 +203,20 @@ script = ExtResource("1_86w1n")
 Bullet = ExtResource("2_xanfi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-93, -35)
+position = Vector2(0, -19)
 scale = Vector2(0.70773, 0.707729)
 sprite_frames = SubResource("SpriteFrames_rowcj")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.00136024
 
+[node name="Marker2D" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(107.386, 15.5427)
+rotation = 1.5708
+scale = Vector2(1.41297, 1.41297)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-127, -25)
+position = Vector2(-27, -8)
 rotation = 1.62826
 scale = Vector2(0.70773, 0.707729)
 shape = SubResource("CapsuleShape2D_u2nwm")
