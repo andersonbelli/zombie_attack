@@ -37,19 +37,14 @@ func _process(delta):
 		
 		bullet.position = position
 		bullet.rotation_degrees = rotation_degrees
-		#bullet.rotate(rotation_degrees * -1)
 		
-		bullet.get_angle_to(mouse_position)
+		
+		#bullet.rotation_degrees = rotation_degrees
+		#bullet.get_angle_to(mouse_position)
 		
 		var direction = global_position.direction_to(mouse_position) # this is a unit vector (length 1)
 		var impulse = direction * 100
-		#bullet.add_constant_central_force(Vector2(10, 0) * delta)
-		
-		#bullet.add_constant_central_force(Vector2(rotation_degrees, rotation * bullet_speed))
-		#bullet.apply_impulse(Vector2(impulse, mouse_position.y * -1), Vector2(0, position.y * -1 * bullet_speed).rotated(rotation))
 		bullet.add_constant_central_force(impulse)
 		
 		owner.add_child(bullet)
-		
-		#get_tree().get_root().add_child(bullet)
 		
