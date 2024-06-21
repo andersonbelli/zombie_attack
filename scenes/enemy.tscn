@@ -1,5 +1,6 @@
-[gd_scene load_steps=46 format=3 uid="uid://cyg5mmus6dbvj"]
+[gd_scene load_steps=48 format=3 uid="uid://cyg5mmus6dbvj"]
 
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_jr2dq"]
 [ext_resource type="Texture2D" uid="uid://datqrkcbhty2q" path="res://assets/tds_zombie/export/skeleton-attack_0.png" id="1_xkpi3"]
 [ext_resource type="Texture2D" uid="uid://b0prbakcqujo5" path="res://assets/tds_zombie/export/skeleton-attack_1.png" id="2_3h18a"]
 [ext_resource type="Texture2D" uid="uid://bv7gkn65pij47" path="res://assets/tds_zombie/export/skeleton-attack_2.png" id="3_mg8ie"]
@@ -191,19 +192,45 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_pgbhm"]
+radius = 37.6563
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dxvos"]
-radius = 34.0
-height = 112.0
+radius = 61.0
+height = 422.127
 
 [node name="enemy" type="RigidBody2D"]
 position = Vector2(120, 84)
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_jr2dq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.686455, 0.686455)
 sprite_frames = SubResource("SpriteFrames_8adgh")
 animation = &"attack"
+autoplay = "attack"
 frame_progress = 0.784751
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-30, 7)
+position = Vector2(-30, 6.99999)
+shape = SubResource("CircleShape2D_pgbhm")
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(0.686455, 0.686455)
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(203.946, 14.5676)
+rotation = -1.56183
+scale = Vector2(1.45676, 1.45676)
 shape = SubResource("CapsuleShape2D_dxvos")
+
+[node name="RayCast2D" type="RayCast2D" parent="Area2D"]
+position = Vector2(-43.7028, 10.1973)
+scale = Vector2(1.45676, 1.45676)
+target_position = Vector2(92, 0)
+collide_with_areas = true
+collide_with_bodies = false
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
