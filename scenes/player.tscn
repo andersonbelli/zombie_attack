@@ -1,6 +1,7 @@
-[gd_scene load_steps=47 format=3 uid="uid://nm76qp1n6ikq"]
+[gd_scene load_steps=48 format=3 uid="uid://nm76qp1n6ikq"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_86w1n"]
+[ext_resource type="PackedScene" uid="uid://c3v0y6irmm2tu" path="res://scenes/bullet.tscn" id="2_xanfi"]
 [ext_resource type="Texture2D" uid="uid://6coeyp368ijf" path="res://assets/Top_Down_Survivor/Top_Down_Survivor/rifle/idle/survivor-idle_rifle_0.png" id="3_gj6tt"]
 [ext_resource type="Texture2D" uid="uid://ct3x2ppgdouxl" path="res://assets/Top_Down_Survivor/Top_Down_Survivor/rifle/idle/survivor-idle_rifle_1.png" id="4_2fqo4"]
 [ext_resource type="Texture2D" uid="uid://c6bqrten5tfgl" path="res://assets/Top_Down_Survivor/Top_Down_Survivor/rifle/idle/survivor-idle_rifle_2.png" id="5_bhkcn"]
@@ -199,6 +200,7 @@ height = 175.893
 [node name="player" type="CharacterBody2D"]
 position = Vector2(301, 541)
 script = ExtResource("1_86w1n")
+Bullet = ExtResource("2_xanfi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-93, -35)
@@ -206,7 +208,7 @@ scale = Vector2(0.70773, 0.707729)
 sprite_frames = SubResource("SpriteFrames_rowcj")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.67944
+frame_progress = 0.00136024
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-127, -25)
