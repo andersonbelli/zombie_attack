@@ -15,6 +15,7 @@ var bullet_speed = 1000
 
 func _process(delta):
 	var mouse_position = get_viewport().get_mouse_position()
+
 	look_at(mouse_position)
 	
 	if cooldown_timer.is_stopped():
@@ -27,8 +28,7 @@ func _process(delta):
 func shoot(mouse_position):
 	bullet = Bullet.instantiate()
 	
-	bullet.position = $AnimatedSprite2D/Marker2D.position		
-	#bullet.rotation_degrees = rotation_degrees
+	bullet.position = $AnimatedSprite2D/Marker2D.position
 	bullet.rotation_degrees = global_rotation
 	
 	var direction = global_position.direction_to(mouse_position)
@@ -40,7 +40,3 @@ func shoot(mouse_position):
 func _on_cooldown_timeout():
 	$AnimatedSprite2D.animation = "idle"
 	cooldown_timer.stop()
-
-
-func _on_bullet_hit():
-	print("hito ---> " + str(1))

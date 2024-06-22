@@ -198,12 +198,12 @@ radius = 74.926
 height = 175.893
 
 [node name="player" type="CharacterBody2D"]
-position = Vector2(301, 541)
+z_index = 1
 script = ExtResource("1_86w1n")
 Bullet = ExtResource("2_xanfi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -19)
+z_index = 1
 scale = Vector2(0.70773, 0.707729)
 sprite_frames = SubResource("SpriteFrames_rowcj")
 animation = &"idle"
@@ -211,7 +211,8 @@ autoplay = "idle"
 frame_progress = 0.976158
 
 [node name="Marker2D" type="Marker2D" parent="AnimatedSprite2D"]
-position = Vector2(107.386, 15.5427)
+z_index = 1
+position = Vector2(84.7781, 32.4983)
 rotation = 1.5708
 scale = Vector2(1.41297, 1.41297)
 

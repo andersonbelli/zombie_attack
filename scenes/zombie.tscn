@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bd0iknyi0nlbe"]
+[gd_scene load_steps=51 format=3 uid="uid://bd0iknyi0nlbe"]
 
 [ext_resource type="Texture2D" uid="uid://datqrkcbhty2q" path="res://assets/tds_zombie/export/skeleton-attack_0.png" id="1_0cmid"]
 [ext_resource type="Script" path="res://scenes/zombie.gd" id="1_bn65h"]
@@ -44,6 +44,9 @@
 [ext_resource type="Texture2D" uid="uid://cddth5fwlwhbf" path="res://assets/tds_zombie/export/skeleton-move_14.png" id="41_m6gt7"]
 [ext_resource type="Texture2D" uid="uid://dvxsgi45ysqin" path="res://assets/tds_zombie/export/skeleton-move_15.png" id="42_02d1e"]
 [ext_resource type="Texture2D" uid="uid://dv0ictvuir6wo" path="res://assets/tds_zombie/export/skeleton-move_16.png" id="43_c0t5u"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mcbnx"]
+blend_mode = 1
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pdylr"]
 animations = [{
@@ -192,6 +195,43 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Animation" id="Animation_oe4be"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:use_parent_material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_jaa7u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:use_parent_material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4t3wj"]
+_data = {
+"RESET": SubResource("Animation_jaa7u"),
+"hit": SubResource("Animation_oe4be")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_carig"]
 radius = 37.6563
 
@@ -201,12 +241,20 @@ collision_mask = 7
 script = ExtResource("1_bn65h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_mcbnx")
+use_parent_material = true
 scale = Vector2(0.686455, 0.686455)
 sprite_frames = SubResource("SpriteFrames_pdylr")
 animation = &"idle"
 autoplay = "idle"
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_4t3wj")
+}
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-30, 6.99999)
 shape = SubResource("CircleShape2D_carig")
 

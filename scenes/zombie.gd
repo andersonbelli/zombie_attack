@@ -11,34 +11,31 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var move_strength = 50
 
+var heath = 5
+
 func _ready():
 	gravity = 0
 
 func enemy_spawn(target: Area2D, enemy_position: Vector2):
-	print("CHAMA O PAI" +  str(target == null) +  str(enemy_position == Vector2.ZERO) )
+	#print("CHAMA O PAI" +  str(target == null) +  str(enemy_position == Vector2.ZERO) )
 	_target = target
 	#_enemy_position = enemy_position
 	
 	look_at(target.position)
-	#$RayCast2D.target_position = _target.position.normalized()
-	
-	print("spawn! " + str(enemy_position))
+	#print("spawn! " + str(enemy_position))
 
 func _physics_process(delta):
+	var collision
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	
-	if collision_mask == 3:
-		print("ouch!")
-	
-	if $RayCast2D.get_collider() == _target:
-		$AnimatedSprite2D.animation = "attack"
-	else:
-		if not $RayCast2D.is_colliding():			
+	#if $RayCast2D.get_collider() == _target:
+		#$AnimatedSprite2D.animation = "attack"
+	#else:
+	if true:
+		if not $RayCast2D.is_colliding():
 			#velocity = move_strength * Vector2(_target.position.x - 1, _target.position.y - 1)
 			#velocity = move_strength * Vector2(_target.position.x - position.x, _target.position.y - 1).normalized()
 		
@@ -46,19 +43,40 @@ func _physics_process(delta):
 			
 			position -= _target.position.direction_to(position)
 			velocity = move_strength * position.direction_to(_target.position)
-			#velocity = move_strength * $RayCast2D.target_position
-			
 			
 			gravity += 1 * move_strength
-			#move_and_slide()
 			
-			var collision = move_and_collide(velocity * delta)
+			collision = move_and_collide(velocity * delta)
 			
 			if collision != null:
-				if collision.get_collider_shape().get("name") == "collision_bullet":
+				if collision.get_collider_shape().get("name") == "CollisionBullet":
+					print("ouch!" + str(self.get_rid()))
 					var bullet = collision.get_collider()
 					
+					#print("colision at =>>> " + str(collision.get_position()))
 					bullet.hit(collision.get_position())
 					
-					print("zombie collison " + str(collision.get_collider_shape().get("name")))
+					if heath != 0:
+						$AnimatedSprite2D/AnimationPlayer.play("hit")
+						heath -= 1
+					else:
+						queue_free()
+		else:
+			$AnimatedSprite2D.animation = "attack"
+			
+			print("COLISION -> " + str($CollisionShape2D.position))
+			
+			if collision != null:
+				if collision.get_collider_shape().get("name") == "CollisionBullet":
+					print("ouch!" + str(self.get_rid()))
+					var bullet = collision.get_collider()
+					
+					#print("colision at =>>> " + str(collision.get_position()))
+					bullet.hit(collision.get_position())
+					
+					if heath != 0:
+						$AnimatedSprite2D/AnimationPlayer.play("hit")
+						heath -= 1
+					else:
+						queue_free()
 
