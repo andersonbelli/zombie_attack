@@ -4,7 +4,7 @@ extends CharacterBody2D
 
 @onready var cooldown_timer = $cooldown
 
-var bullet: RigidBody2D
+var bullet: BulletClass
 var bullet_speed = 1000
 
 #func _ready():

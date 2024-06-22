@@ -1,5 +1,12 @@
 extends RigidBody2D
 
+class_name BulletClass
+
+func _get_class(): 
+	return "BulletClass"
+func _is_class(name):
+	return name == "BulletClass"
+
 @onready var animated_sprite = $HitAnimatedSprite
 @onready var collision_bullet = $CollisionBullet
 @onready var bullet_sprite = $BulletSprite
