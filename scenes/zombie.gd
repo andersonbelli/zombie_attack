@@ -46,35 +46,33 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	
-	#if $RayCast2D.get_collider() == _target:
-		#$AnimatedSprite2D.animation = "attack"
-	#else:
-	if not ray_cast.is_colliding():
-		#velocity = move_strength * Vector2(_target.position.x - 1, _target.position.y - 1)
-		#velocity = move_strength * Vector2(_target.position.x - position.x, _target.position.y - 1).normalized()
-	
-		#look_at(_target.position - position)
-		
-		position -= _target.position.direction_to(position)
-		velocity = move_strength * position.direction_to(_target.position)
-		
-		gravity += 1 * move_strength
-		
-		collision = move_and_collide(velocity * delta)
+	if ray_cast.get_collider() != null:
+		_on_game_wall_hit()
+		pass
+		#print("raycast - " + str(ray_cast.get_collider().get_name()))
+		#if str(ray_cast.get_collider().get_name()).to_lower().contains("wall"):
+			#match ray_cast.get_collider().get_name():
+				#"AreaWallCenter":
+					#print("center")
+				#"AreaWallRight":
+					#print("right")
+				#"AreaWallLeft":
+					#print("left")
 			
 	else:
-		$AnimatedSprite2D.animation = "attack"
-
-
+		if not ray_cast.is_colliding():
+			position -= _target.position.direction_to(position)
+			velocity = move_strength * position.direction_to(_target.position)
+			
+			gravity += 1 * move_strength
+			
+			collision = move_and_collide(velocity * delta)
+		else:
+			$AnimatedSprite2D.animation = "attack"
 
 func _on_area_2d_body_entered(body):
-	#print("body  " + str(body.get_name()))
-	
-	print("body  " + str(body.is_class("BulletClass")) + str(body.get_children()))
 	if str(body.get_children()).contains("Bullet"):
-	
 		var bullet = body
-		#print("colision at =>>> " + str(collision.get_position()))
 		bullet.hit(body.position)
 		
 		if heath != 0:
@@ -82,3 +80,7 @@ func _on_area_2d_body_entered(body):
 			heath -= 1
 		else:
 			queue_free()
+
+
+func _on_game_wall_hit():
+	print("asd")

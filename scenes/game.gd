@@ -5,9 +5,9 @@ enum WALLS {LEFT, CENTER, RIGHT}
 
 @onready var mob_path = $mob_spawn/PathFollow2D
 
-@onready var wall_center = $walls/area_wall_center
-@onready var wall_left = $walls/area_wall_left
-@onready var wall_right = $walls/area_wall_right
+@onready var wall_center = $walls/AreaWallCenter
+@onready var wall_left = $walls/AreaWallLeft
+@onready var wall_right = $walls/AreaWallRight
 
 @onready var player: CharacterBody2D = $player
 @onready var spawn_timer = $spawn_timer
@@ -16,6 +16,7 @@ enum WALLS {LEFT, CENTER, RIGHT}
 @export var Zombie: PackedScene
 var zombie: CharacterBody2D
 
+signal wall_hit
 
 func _on_spawn_timer_timeout():
 	zombie = Zombie.instantiate()

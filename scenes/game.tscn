@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bid8al1ax388q" path="res://assets/background.png" id="1_561u7"]
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_bejen"]
 [ext_resource type="PackedScene" uid="uid://nm76qp1n6ikq" path="res://scenes/player.tscn" id="2_3n2to"]
-[ext_resource type="PackedScene" uid="uid://bd0iknyi0nlbe" path="res://scenes/zombie.tscn" id="2_v8qvh"]
+[ext_resource type="PackedScene" uid="uid://bd0iknyi0nlbe" path="res://scenes/zombie.tscn" id="2_bsm38"]
 [ext_resource type="Script" path="res://scenes/mob_spawn.gd" id="4_te72t"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b6rhq"]
@@ -28,7 +28,7 @@ size = Vector2(240.149, 83.587)
 [node name="Game" type="Node2D"]
 position = Vector2(264, 386)
 script = ExtResource("1_bejen")
-Zombie = ExtResource("2_v8qvh")
+Zombie = ExtResource("2_bsm38")
 
 [node name="background" type="Sprite2D" parent="."]
 position = Vector2(2.76004, -25.2)
@@ -73,37 +73,37 @@ autostart = true
 
 [node name="walls" type="Node" parent="."]
 
-[node name="area_wall_center" type="Area2D" parent="walls"]
+[node name="AreaWallCenter" type="Area2D" parent="walls"]
 position = Vector2(307, 555)
 rotation = -0.471239
 collision_layer = 3
 collision_mask = 2
 
-[node name="wall_center" type="CollisionShape2D" parent="walls/area_wall_center"]
+[node name="ColisionWallCenter" type="CollisionShape2D" parent="walls/AreaWallCenter"]
 position = Vector2(-0.891018, -0.45401)
 shape = SubResource("RectangleShape2D_5drib")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
-[node name="area_wall_right" type="Area2D" parent="walls"]
+[node name="AreaWallRight" type="Area2D" parent="walls"]
 position = Vector2(473, 510)
 rotation = -0.150098
 collision_layer = 3
 collision_mask = 2
 
-[node name="wall_right" type="CollisionShape2D" parent="walls/area_wall_right"]
+[node name="ColisionWallRight" type="CollisionShape2D" parent="walls/AreaWallRight"]
 position = Vector2(-1.13832, 0.839203)
 shape = SubResource("RectangleShape2D_fxf7y")
 metadata/_edit_lock_ = true
 
-[node name="area_wall_left" type="Area2D" parent="walls"]
+[node name="AreaWallLeft" type="Area2D" parent="walls"]
 position = Vector2(119, 668)
 rotation = -0.685914
 collision_layer = 3
 collision_mask = 2
 metadata/_edit_group_ = true
 
-[node name="wall_left" type="CollisionShape2D" parent="walls/area_wall_left"]
+[node name="ColisionWallLeft" type="CollisionShape2D" parent="walls/AreaWallLeft"]
 shape = SubResource("RectangleShape2D_e70rp")
 metadata/_edit_lock_ = true
 
