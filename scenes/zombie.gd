@@ -18,29 +18,12 @@ var collision
 func _ready():
 	gravity = 0
 
-func enemy_spawn(target: Area2D, enemy_position: Vector2):
-	#print("CHAMA O PAI" +  str(target == null) +  str(enemy_position == Vector2.ZERO) )
-	_target = target
-	#_enemy_position = enemy_position
-	
-	look_at(target.position)
-	#print("spawn! " + str(enemy_position))
-
 #func _process(delta):
-	#if collision != null:
-		##print("collision " + str(collision.get_collider_shape()))
-		#if collision.get_collider_shape().get("name") == "CollisionBullet":
-			##print("ouch!" + str(self.get_rid()))
-			#var bullet = collision.get_collider()
-			#
-			##print("colision at =>>> " + str(collision.get_position()))
-			#bullet.hit(collision.get_position())
-			#
-			#if heath != 0:
-				#$AnimatedSprite2D/AnimationPlayer.play("hit")
-				#heath -= 1
-			#else:
-				#queue_free()
+	#look_at(_target.position)
+
+func enemy_spawn(target: Area2D, enemy_position: Vector2):
+	_target = target
+	look_at(target.position)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -74,4 +57,5 @@ func _on_game_wall_hit():
 	#print("asd")
 	if $AnimatedSprite2D.animation != "attack":
 		$AnimatedSprite2D.animation = "attack"
-	pass
+		
+	

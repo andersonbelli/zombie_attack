@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://04gvsrrf3mix"]
+[gd_scene load_steps=10 format=3 uid="uid://04gvsrrf3mix"]
 
 [ext_resource type="Texture2D" uid="uid://bid8al1ax388q" path="res://assets/background.png" id="1_561u7"]
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_bejen"]
 [ext_resource type="PackedScene" uid="uid://nm76qp1n6ikq" path="res://scenes/player.tscn" id="2_3n2to"]
 [ext_resource type="PackedScene" uid="uid://bd0iknyi0nlbe" path="res://scenes/zombie.tscn" id="2_bsm38"]
+[ext_resource type="PackedScene" uid="uid://ca2kbffbmnrl5" path="res://scenes/walls.tscn" id="5_fa8io"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b6rhq"]
 
@@ -21,15 +22,6 @@ script/source = "extends Path2D
 func _ready():
 	print(\"start nene\")
 "
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5drib"]
-size = Vector2(219.067, 69)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fxf7y"]
-size = Vector2(157.5, 72.1679)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e70rp"]
-size = Vector2(240.149, 83.587)
 
 [node name="Game" type="Node2D"]
 position = Vector2(264, 386)
@@ -78,40 +70,6 @@ rotation = -1.8636
 wait_time = 3.0
 autostart = true
 
-[node name="walls" type="Node" parent="."]
-
-[node name="AreaWallCenter" type="Area2D" parent="walls"]
-position = Vector2(307, 555)
-rotation = -0.471239
-collision_layer = 19
-collision_mask = 2
-
-[node name="ColisionWallCenter" type="CollisionShape2D" parent="walls/AreaWallCenter"]
-position = Vector2(-0.891018, -0.45401)
-shape = SubResource("RectangleShape2D_5drib")
-metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
-
-[node name="AreaWallRight" type="Area2D" parent="walls"]
-position = Vector2(473, 510)
-rotation = -0.150098
-collision_layer = 19
-collision_mask = 2
-
-[node name="ColisionWallRight" type="CollisionShape2D" parent="walls/AreaWallRight"]
-position = Vector2(-1.13832, 0.839203)
-shape = SubResource("RectangleShape2D_fxf7y")
-metadata/_edit_lock_ = true
-
-[node name="AreaWallLeft" type="Area2D" parent="walls"]
-position = Vector2(119, 668)
-rotation = -0.685914
-collision_layer = 19
-collision_mask = 2
-metadata/_edit_group_ = true
-
-[node name="ColisionWallLeft" type="CollisionShape2D" parent="walls/AreaWallLeft"]
-shape = SubResource("RectangleShape2D_e70rp")
-metadata/_edit_lock_ = true
+[node name="walls" parent="." instance=ExtResource("5_fa8io")]
 
 [connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]
