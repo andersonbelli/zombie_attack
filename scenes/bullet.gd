@@ -31,33 +31,19 @@ func hit(zombie: ZombieClass , _hit_position):
 	angular_velocity = 0
 	animated_sprite.visible = true
 	animated_sprite.z_index = 5
-	
-	freeze_mode = RigidBody2D.FREEZE_MODE_STATIC
-	#freeze = true
+
+	call_deferred("set_freeze_enabled", true)
 	
 	linear_velocity = linear_velocity / 2000
 	constant_force =  constant_force / 1000
 	
 	animated_sprite.play("hit_enemy")
 	
-	#owner = get_tree().root.get_child(0)
-	
 	if get_parent().name != "player":
 		zombie.health -= 1
-	
-	print("parent ------ "+ str(get_parent().name))
-	
-	#animated_sprite.position = position.direction_to(_hit_position)
-	#position = _hit_position
-	
-	#animated_sprite.play("hit_enemy")
-	
 
 func _on_animated_sprite_2d_animation_finished():
-	#print("hitei XD + " + str(hit_position))
-	#await animated_sprite.animation_finished
 	queue_free()
-	#get_parent().remove_child(self)
 
 func _on_animated_sprite_2d_animation_changed():
 	position = hit_position
