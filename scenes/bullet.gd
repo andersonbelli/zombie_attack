@@ -21,10 +21,14 @@ func _physics_process(delta):
 func hit(zombie: ZombieClass , _hit_position):
 	call_deferred("reparent", zombie)
 	collision_bullet.call_deferred("set_disabled", true)
+	collision_bullet.rotation = 0
 	
 	hit_position = _hit_position
 	
+	
 	bullet_sprite.visible = false
+	rotation = 0
+	angular_velocity = 0
 	animated_sprite.visible = true
 	animated_sprite.z_index = 5
 	
