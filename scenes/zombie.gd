@@ -47,48 +47,26 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	
-	if ray_cast.get_collider() != null:
+	if ray_cast.is_colliding():
+		print("wall + " + str(ray_cast.get_collider().name))
 		_on_game_wall_hit()
-		pass
-		#print("raycast - " + str(ray_cast.get_collider().get_name()))
-		#if str(ray_cast.get_collider().get_name()).to_lower().contains("wall"):
-			#match ray_cast.get_collider().get_name():
-				#"AreaWallCenter":
-					#print("center")
-				#"AreaWallRight":
-					#print("right")
-				#"AreaWallLeft":
-					#print("left")
-			
 	else:
-		if not ray_cast.is_colliding():
-			position -= _target.position.direction_to(position)
-			velocity = move_strength * position.direction_to(_target.position)
-			
-			gravity += 1 * move_strength
-			
-			collision = move_and_collide(velocity * delta)
-		else:
-			$AnimatedSprite2D.animation = "attack"
+		position -= _target.position.direction_to(position)
+		velocity = move_strength * position.direction_to(_target.position)
+		
+		gravity += 1 * move_strength
+		
+		collision = move_and_collide(velocity * delta)
 
 func _on_area_2d_body_entered(body):
-	#print("Body " + str(body))
-	
 	if str(body.get_children()).contains("Bullet"):
 		var bullet: BulletClass = body
-		
-		#await bullet.call_deferred("reparent", self)
-		
 		bullet.hit(self, body.position)
 		
 		print("health " + str(health))
-		
 		$AnimatedSprite2D/AnimationPlayer.play("hit")
-		if health != 0:
-			pass
-			#$AnimatedSprite2D/AnimationPlayer.play("hit")
-			#health -= 1
-		else:
+		
+		if health == 0:
 			queue_free()
 
 
