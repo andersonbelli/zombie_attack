@@ -249,7 +249,8 @@ scale = Vector2(0.686455, 0.686455)
 sprite_frames = SubResource("SpriteFrames_pdylr")
 animation = &"attack"
 autoplay = "move"
-frame_progress = 0.458891
+frame = 7
+frame_progress = 0.99157
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {

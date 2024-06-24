@@ -29,17 +29,16 @@ func _on_spawn_timer_timeout():
 	
 	wall = wall_to_attack
 	
-	print("wall is null? " + str(wall)) 
 	
-	if wall != null:
-		match wall:
-			WALLS.CENTER:
-				target = wall_center
-			WALLS.LEFT:
-				target = wall_left
-			WALLS.RIGHT:
-				target = wall_right
-	else:
+	match wall:
+		WALLS.CENTER:
+			target = wall_center
+		WALLS.LEFT:
+			target = wall_left
+		WALLS.RIGHT:
+			target = wall_right
+
+	if target == null:
 		target = player
 	
 	mob_path.progress = randf_range(0, 1100)

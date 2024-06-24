@@ -22,9 +22,10 @@ func _ready():
 #func _process(delta):
 	#look_at(_target.position)
 
-func enemy_spawn(target: Area2D, enemy_position: Vector2):
+func enemy_spawn(target, enemy_position: Vector2):
 	_target = target
 	look_at(target.position)
+	position.angle_to(_target.position.direction_to(position))
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -33,23 +34,28 @@ func _physics_process(delta):
 	
 	if ray_cast.is_colliding():
 		if ray_cast.get_collider() != null:
-			print("raycast + " + str(ray_cast.get_collider().name).to_lower())
+			#print("raycast + " + str(ray_cast.get_collider().name).to_lower())
 			
 			if str(ray_cast.get_collider().name).to_lower().contains("wall"):
 				var colission_wall = ray_cast.get_collider()
+				if _target == null:
+					_target = colission_wall
+					position.angle_to(_target.position.direction_to(position))
+				
 				_on_game_wall_hit(colission_wall)
 			elif str(ray_cast.get_collider().name).to_lower().contains("player"):
+				#look_at(ray_cast.target_position)
 				_on_player_hit()
 	else:
 		if _target == null:
 			_target = get_parent().find_child("player")
 			
-			print("player focus ==== " + str(_target))
+			#print("player focus ==== " + str(_target))
 			
 			#rotation = position.angle_to(_target.position) + randf_range(-PI / 4, PI / 4)
 			var direction = (position.angle_to(_target.position)) + PI / 2
 			direction += randf_range(-PI / 4, PI / 4)
-			#rotation = direction
+			rotation = direction
 			#look_at(direction)
 			position.angle_to(_target.position.direction_to(position))
 			
@@ -110,6 +116,7 @@ func _on_game_wall_hit(wall):
 				hit_cooldown_timer.start()
 			else:
 				$AnimatedSprite2D.animation = "idle"
+				_target = null
 				wall.queue_free()
 
 func _on_player_hit():
