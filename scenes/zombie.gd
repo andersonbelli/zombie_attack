@@ -2,16 +2,15 @@ extends CharacterBody2D
 
 class_name ZombieClass
 
-const SPEED = 300.0
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-@onready var _target: Area2D
-@onready var _enemy_position: Vector2
 @onready var ray_cast = $Area2D/CollisionShape2D/RayCast2D
 @onready var hit_cooldown_timer = $HitCooldownTimer
 @onready var delay_hit_timer = $DelayHitTimer
+
+var _target
+var _enemy_position: Vector2
 
 var move_strength = 50
 var health = 5
@@ -33,18 +32,42 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 	
 	if ray_cast.is_colliding():
-		#print("wall + " + str(ray_cast.get_collider()))
-		#print("wall + " + str(ray_cast.get_collider().get_methods()))
-	
 		if ray_cast.get_collider() != null:
+			print("raycast + " + str(ray_cast.get_collider().name).to_lower())
+			
 			if str(ray_cast.get_collider().name).to_lower().contains("wall"):
 				var colission_wall = ray_cast.get_collider()
 				_on_game_wall_hit(colission_wall)
+			elif str(ray_cast.get_collider().name).to_lower().contains("player"):
+				_on_player_hit()
 	else:
+		if _target == null:
+			_target = get_parent().find_child("player")
+			
+			print("player focus ==== " + str(_target))
+			
+			#rotation = position.angle_to(_target.position) + randf_range(-PI / 4, PI / 4)
+			var direction = (position.angle_to(_target.position)) + PI / 2
+			direction += randf_range(-PI / 4, PI / 4)
+			#rotation = direction
+			#look_at(direction)
+			position.angle_to(_target.position.direction_to(position))
+			
+			#ray_cast.target_position = position.direction_to(_target.position)
+			#ray_cast.target_position = _target.position - position
+			
+			#print("raycast + " + str(ray_cast.get_collider().name).to_lower())
+			
+			$AnimatedSprite2D.animation = "move"
+		
+		print("player focus ==== " + str(_target))
+		
 		position -= _target.position.direction_to(position)
 		velocity = move_strength * position.direction_to(_target.position)
 		
 		gravity += 1 * move_strength
+	
+		position.angle_to(_target.position)
 		
 		move_and_collide(velocity * delta)
 		_enemy_position = position
@@ -63,17 +86,18 @@ func _on_area_2d_body_entered(body):
 
 func _on_game_wall_hit(wall):
 	#print("wall + " + str(wall_name.name))
+	#print("hit_cooldown_timer + " + str(hit_cooldown_timer.time_left))
 	
-	$AnimatedSprite2D.animation = "attack"
-	
-	if hit_cooldown_timer.is_stopped():
-		print("hit_cooldown_timer + " + str(delay_hit_timer.time_left))
+	if hit_cooldown_timer.time_left < 0.7:
+		print("delay_hit_timer + " + str(delay_hit_timer.time_left))
 		delay_hit_timer.autostart = true
 		
-		if delay_hit_timer.is_stopped():
+		if delay_hit_timer.time_left < 1:
 			delay_hit_timer.start()
 			$AnimatedSprite2D.animation = "idle"
 		else:
+			$AnimatedSprite2D.animation = "attack"
+			
 			wall = wall as WallsClass
 		
 			wall.health -= zombie_strength
@@ -85,19 +109,9 @@ func _on_game_wall_hit(wall):
 				
 				hit_cooldown_timer.start()
 			else:
+				$AnimatedSprite2D.animation = "idle"
 				wall.queue_free()
-		
-	#match wall.name:
-		#"AreaWallCenter":
-			#print("center")
-			#
-		#"AreaWallRight":
-			#print("right")
-			#
-		#"AreaWallLeft":
-			#print("left")
-	
-	#if $AnimatedSprite2D.animation != "attack":
-		#$AnimatedSprite2D.animation = "attack"
-		
-	
+
+func _on_player_hit():
+	print("player!!!")
+	$AnimatedSprite2D.animation = "attack"

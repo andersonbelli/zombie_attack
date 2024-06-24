@@ -25,7 +25,6 @@ func hit(zombie: ZombieClass , _hit_position):
 	
 	hit_position = _hit_position
 	
-	
 	bullet_sprite.visible = false
 	rotation = 0
 	angular_velocity = 0

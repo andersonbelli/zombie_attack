@@ -198,7 +198,8 @@ radius = 74.926
 height = 175.893
 
 [node name="player" type="CharacterBody2D"]
-z_index = 1
+z_index = 3
+collision_mask = 3
 script = ExtResource("1_86w1n")
 Bullet = ExtResource("2_xanfi")
 
@@ -216,8 +217,9 @@ position = Vector2(84.7781, 32.4983)
 rotation = 1.5708
 scale = Vector2(1.41297, 1.41297)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+[node name="AreaPlayer" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreaPlayer"]
 position = Vector2(-27, -8)
 rotation = 1.62826
 scale = Vector2(0.70773, 0.707729)

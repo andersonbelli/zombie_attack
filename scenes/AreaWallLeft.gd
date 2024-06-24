@@ -1,9 +1,7 @@
 extends WallsClass
 
-#class_name AreaWallLeftClass
-#
-#signal on_hit
+@onready var animation_player = $Sprite2D/AnimationPlayer
 
-
-func _on_on_hit():
-	$AnimationPlayer.play("hit")
+func on_hit():
+	animation_player.play("hit")
+	print("HIT ON LEFT WALL!!")

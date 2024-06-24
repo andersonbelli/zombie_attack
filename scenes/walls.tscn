@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dms73j6tft5eu" path="res://assets/wall_left.png" id="6_vsbsv"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ksjdw"]
-blend_mode = 1
+blend_mode = 4
 
 [sub_resource type="Animation" id="Animation_jaa7u"]
 length = 0.001
@@ -59,7 +59,8 @@ size = Vector2(240.149, 83.587)
 [node name="walls" type="Node"]
 
 [node name="AreaWallCenter" type="Area2D" parent="."]
-position = Vector2(307, 555)
+z_index = 2
+position = Vector2(305, 409)
 rotation = -0.471239
 collision_layer = 19
 collision_mask = 2
@@ -81,34 +82,37 @@ libraries = {
 position = Vector2(-0.891018, -0.45401)
 shape = SubResource("RectangleShape2D_x81fw")
 metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
 
 [node name="AreaWallRight" type="Area2D" parent="."]
+z_index = 2
 use_parent_material = true
-position = Vector2(473, 510)
+position = Vector2(471, 364)
 rotation = -0.150098
 collision_layer = 19
 collision_mask = 2
 script = ExtResource("2_6mwxn")
 
 [node name="Sprite2D" type="Sprite2D" parent="AreaWallRight"]
-position = Vector2(5.783, 1.88598)
-rotation = 0.1182
+material = SubResource("CanvasItemMaterial_ksjdw")
+use_parent_material = true
+position = Vector2(5.09332, -0.241068)
+rotation = 0.131567
+scale = Vector2(0.921354, 0.921354)
 texture = ExtResource("4_sfu52")
 
-[node name="ColisionWallRight" type="CollisionShape2D" parent="AreaWallRight"]
-position = Vector2(-1.13832, 0.839203)
-shape = SubResource("RectangleShape2D_bwl8t")
-metadata/_edit_lock_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AreaWallRight"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AreaWallRight/Sprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_4t3wj")
 }
 
+[node name="ColisionWallRight" type="CollisionShape2D" parent="AreaWallRight"]
+position = Vector2(-1.13832, 0.839203)
+shape = SubResource("RectangleShape2D_bwl8t")
+
 [node name="AreaWallLeft" type="Area2D" parent="."]
+z_index = 2
 use_parent_material = true
-position = Vector2(119, 668)
+position = Vector2(117, 522)
 rotation = -0.685914
 collision_layer = 19
 collision_mask = 2
@@ -116,15 +120,17 @@ script = ExtResource("3_n6cci")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="AreaWallLeft"]
-position = Vector2(-3.37628, -5.34796)
-rotation = 0.709865
+material = SubResource("CanvasItemMaterial_ksjdw")
+use_parent_material = true
+position = Vector2(-4.44084, -4.0997)
+rotation = 0.693382
+scale = Vector2(1.03211, 0.995491)
 texture = ExtResource("6_vsbsv")
 
-[node name="ColisionWallLeft" type="CollisionShape2D" parent="AreaWallLeft"]
-shape = SubResource("RectangleShape2D_dbjtq")
-metadata/_edit_lock_ = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AreaWallLeft"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AreaWallLeft/Sprite2D"]
 libraries = {
 "": SubResource("AnimationLibrary_4t3wj")
 }
+
+[node name="ColisionWallLeft" type="CollisionShape2D" parent="AreaWallLeft"]
+shape = SubResource("RectangleShape2D_dbjtq")

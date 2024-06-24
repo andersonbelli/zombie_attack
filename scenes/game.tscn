@@ -28,6 +28,8 @@ position = Vector2(264, 386)
 script = ExtResource("1_bejen")
 Zombie = ExtResource("2_bsm38")
 
+[node name="walls" parent="." instance=ExtResource("5_fa8io")]
+
 [node name="background" type="Sprite2D" parent="."]
 position = Vector2(2.76004, -25.2)
 scale = Vector2(1.01393, 1.00222)
@@ -67,8 +69,7 @@ rotation = -1.8636
 
 [node name="spawn_timer" type="Timer" parent="."]
 wait_time = 3.0
+one_shot = true
 autostart = true
-
-[node name="walls" parent="." instance=ExtResource("5_fa8io")]
 
 [connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]

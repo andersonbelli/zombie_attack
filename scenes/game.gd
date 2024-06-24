@@ -25,18 +25,22 @@ func _on_spawn_timer_timeout():
 	zombie.position = path.position
 	
 	var target = wall_center
-	
 	var wall_to_attack = randi_range(0, 2)
 	
 	wall = wall_to_attack
 	
-	match wall:
-		WALLS.CENTER:
-			target = wall_center
-		WALLS.LEFT:
-			target = wall_left
-		WALLS.RIGHT:
-			target = wall_right
+	print("wall is null? " + str(wall)) 
+	
+	if wall != null:
+		match wall:
+			WALLS.CENTER:
+				target = wall_center
+			WALLS.LEFT:
+				target = wall_left
+			WALLS.RIGHT:
+				target = wall_right
+	else:
+		target = player
 	
 	mob_path.progress = randf_range(0, 1100)
 	
@@ -50,11 +54,6 @@ func _on_spawn_timer_timeout():
 		zombie.position.y = mob_path.position.y * (-1)
 	else:
 		zombie.position = mob_path.position
-	
-	#print("y.position --> " + str(zombie.position.x))
-	#print("x.position --> " + str(zombie.position.y))
-	#print("path --> " + str(mob_path.progress))
-	#print("attack: " + str(wall_to_attack))
 	
 	direction += randf_range(-PI / 4, PI / 4)
 	zombie.rotation = direction
