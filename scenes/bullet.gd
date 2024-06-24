@@ -18,27 +18,31 @@ func _physics_process(delta):
 		#position = hit_position
 	pass
 
-func hit(_hit_position):
+func hit(zombie: ZombieClass , _hit_position):
+	call_deferred("reparent", zombie)
+	collision_bullet.call_deferred("set_disabled", true)
+	
+	hit_position = _hit_position
+	
 	bullet_sprite.visible = false
 	animated_sprite.visible = true
 	animated_sprite.z_index = 5
+	
+	freeze_mode = RigidBody2D.FREEZE_MODE_STATIC
+	#freeze = true
+	
+	linear_velocity = linear_velocity / 2000
+	constant_force =  constant_force / 1000
 	
 	animated_sprite.play("hit_enemy")
 	
 	#owner = get_tree().root.get_child(0)
 	
-	#print("owner ------ "+ str(owner))
+	if get_parent().name != "player":
+		zombie.health -= 1
 	
+	print("parent ------ "+ str(get_parent().name))
 	
-	linear_velocity= Vector2.ZERO
-	constant_force = Vector2.ZERO
-	freeze = true
-	
-	collision_bullet.disabled = true
-	
-	#animated_sprite.animation = "hit_enemy"
-	
-	hit_position = _hit_position
 	#animated_sprite.position = position.direction_to(_hit_position)
 	#position = _hit_position
 	
@@ -47,9 +51,9 @@ func hit(_hit_position):
 
 func _on_animated_sprite_2d_animation_finished():
 	#print("hitei XD + " + str(hit_position))
-	
+	#await animated_sprite.animation_finished
 	queue_free()
-	get_parent().remove_child(self)
+	#get_parent().remove_child(self)
 
 func _on_animated_sprite_2d_animation_changed():
 	position = hit_position

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c3v0y6irmm2tu"]
+[gd_scene load_steps=14 format=3 uid="uid://c3v0y6irmm2tu"]
 
 [ext_resource type="Texture2D" uid="uid://cm1g51o4wlcar" path="res://assets/bullet.png" id="1_wywa3"]
 [ext_resource type="Script" path="res://scenes/bullet.gd" id="1_xfias"]
@@ -11,14 +11,6 @@ region = Rect2(0, 0, 179, 174)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1c8mq"]
 atlas = ExtResource("2_rwt1j")
 region = Rect2(179, 0, 179, 174)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wdiu8"]
-atlas = ExtResource("2_rwt1j")
-region = Rect2(358, 0, 179, 174)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4a622"]
-atlas = ExtResource("2_rwt1j")
-region = Rect2(0, 348, 179, 174)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uqjqf"]
 atlas = ExtResource("2_rwt1j")
@@ -52,12 +44,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1c8mq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wdiu8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4a622")
 }, {
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_uqjqf")
@@ -100,10 +86,19 @@ script = ExtResource("1_xfias")
 position = Vector2(0.263, 1.175)
 sprite_frames = SubResource("SpriteFrames_dryn1")
 animation = &"hit_enemy"
-frame = 10
+frame = 8
+frame_progress = 1.0
+
+[node name="HitAnimatedSprite2" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0.263, 1.175)
+sprite_frames = SubResource("SpriteFrames_dryn1")
+animation = &"hit_enemy"
+frame = 8
 frame_progress = 1.0
 
 [node name="BulletSprite" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0.136, 0.364)
 scale = Vector2(0.016, 0.022)
 texture = ExtResource("1_wywa3")
@@ -115,3 +110,5 @@ shape = SubResource("CapsuleShape2D_ue65o")
 
 [connection signal="animation_changed" from="HitAnimatedSprite" to="." method="_on_animated_sprite_2d_animation_changed"]
 [connection signal="animation_finished" from="HitAnimatedSprite" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="animation_changed" from="HitAnimatedSprite2" to="." method="_on_animated_sprite_2d_animation_changed"]
+[connection signal="animation_finished" from="HitAnimatedSprite2" to="." method="_on_animated_sprite_2d_animation_finished"]

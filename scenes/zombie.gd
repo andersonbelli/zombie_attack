@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+class_name ZombieClass
 
 const SPEED = 300.0
 
@@ -11,7 +12,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var ray_cast = $Area2D/CollisionShape2D/RayCast2D
 
 var move_strength = 50
-var heath = 4
+var health = 5
 var collision
 
 func _ready():
@@ -25,21 +26,21 @@ func enemy_spawn(target: Area2D, enemy_position: Vector2):
 	look_at(target.position)
 	#print("spawn! " + str(enemy_position))
 
-func _process(delta):
-	if collision != null:
-		#print("collision " + str(collision.get_collider_shape()))
-		if collision.get_collider_shape().get("name") == "CollisionBullet":
-			#print("ouch!" + str(self.get_rid()))
-			var bullet = collision.get_collider()
-			
-			#print("colision at =>>> " + str(collision.get_position()))
-			bullet.hit(collision.get_position())
-			
-			if heath != 0:
-				$AnimatedSprite2D/AnimationPlayer.play("hit")
-				heath -= 1
-			else:
-				queue_free()
+#func _process(delta):
+	#if collision != null:
+		##print("collision " + str(collision.get_collider_shape()))
+		#if collision.get_collider_shape().get("name") == "CollisionBullet":
+			##print("ouch!" + str(self.get_rid()))
+			#var bullet = collision.get_collider()
+			#
+			##print("colision at =>>> " + str(collision.get_position()))
+			#bullet.hit(collision.get_position())
+			#
+			#if heath != 0:
+				#$AnimatedSprite2D/AnimationPlayer.play("hit")
+				#heath -= 1
+			#else:
+				#queue_free()
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -71,16 +72,28 @@ func _physics_process(delta):
 			$AnimatedSprite2D.animation = "attack"
 
 func _on_area_2d_body_entered(body):
+	#print("Body " + str(body))
+	
 	if str(body.get_children()).contains("Bullet"):
-		var bullet = body
-		bullet.hit(body.position)
+		var bullet: BulletClass = body
 		
-		if heath != 0:
-			$AnimatedSprite2D/AnimationPlayer.play("hit")
-			heath -= 1
+		#await bullet.call_deferred("reparent", self)
+		
+		bullet.hit(self, body.position)
+		
+		print("health " + str(health))
+		
+		$AnimatedSprite2D/AnimationPlayer.play("hit")
+		if health != 0:
+			pass
+			#$AnimatedSprite2D/AnimationPlayer.play("hit")
+			#health -= 1
 		else:
 			queue_free()
 
 
 func _on_game_wall_hit():
-	print("asd")
+	#print("asd")
+	if $AnimatedSprite2D.animation != "attack":
+		$AnimatedSprite2D.animation = "attack"
+	pass

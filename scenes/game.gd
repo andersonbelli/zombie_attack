@@ -14,7 +14,7 @@ enum WALLS {LEFT, CENTER, RIGHT}
 @onready var path = $mob_spawn/PathFollow2D
 
 @export var Zombie: PackedScene
-var zombie: CharacterBody2D
+var zombie: ZombieClass
 
 signal wall_hit
 
@@ -63,4 +63,3 @@ func _on_spawn_timer_timeout():
 	zombie.enemy_spawn(target, zombie.position)
 	
 	add_child(zombie)
-	spawn_timer.start()

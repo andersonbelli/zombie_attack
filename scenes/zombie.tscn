@@ -80,7 +80,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -237,8 +237,8 @@ radius = 37.6563
 
 [node name="zombie" type="CharacterBody2D"]
 position = Vector2(234, 393)
-collision_layer = 6
-collision_mask = 23
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_bn65h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -246,8 +246,9 @@ material = SubResource("CanvasItemMaterial_mcbnx")
 use_parent_material = true
 scale = Vector2(0.686455, 0.686455)
 sprite_frames = SubResource("SpriteFrames_pdylr")
-animation = &"idle"
-autoplay = "idle"
+animation = &"move"
+autoplay = "move"
+frame_progress = 0.327802
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
@@ -255,8 +256,8 @@ libraries = {
 }
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 4
+collision_layer = 6
+collision_mask = 20
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-30, 6.99999)
@@ -265,5 +266,12 @@ shape = SubResource("CircleShape2D_carig")
 [node name="RayCast2D" type="RayCast2D" parent="Area2D/CollisionShape2D"]
 position = Vector2(0, 3.33786e-06)
 target_position = Vector2(92, 0)
+collision_mask = 16
 collide_with_areas = true
 collide_with_bodies = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-30, 6.99999)
+shape = SubResource("CircleShape2D_carig")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
