@@ -83,7 +83,6 @@ frame = 7
 frame_progress = 1.0
 
 [node name="BulletSprite" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(0.136, 0.364)
 scale = Vector2(0.016, 0.022)
 texture = ExtResource("1_wywa3")

@@ -80,7 +80,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 6.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -246,9 +246,9 @@ material = SubResource("CanvasItemMaterial_mcbnx")
 use_parent_material = true
 scale = Vector2(0.686455, 0.686455)
 sprite_frames = SubResource("SpriteFrames_pdylr")
-animation = &"move"
+animation = &"attack"
 autoplay = "move"
-frame_progress = 0.388758
+frame_progress = 0.934923
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {
@@ -273,5 +273,11 @@ collide_with_bodies = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-30, 6.99999)
 shape = SubResource("CircleShape2D_carig")
+
+[node name="HitCooldownTimer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="DelayHitTimer" type="Timer" parent="."]
+wait_time = 3.0
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,6 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://ca2kbffbmnrl5"]
+[gd_scene load_steps=14 format=3 uid="uid://ca2kbffbmnrl5"]
 
-[ext_resource type="Script" path="res://scenes/walls.gd" id="1_gk1k4"]
+[ext_resource type="Script" path="res://scenes/AreaWallCenter.gd" id="1_rgtk0"]
+[ext_resource type="Texture2D" uid="uid://b7rt31wl513dj" path="res://assets/wall_center.png" id="2_6co26"]
+[ext_resource type="Script" path="res://scenes/AreaWallRight.gd" id="2_6mwxn"]
+[ext_resource type="Script" path="res://scenes/AreaWallLeft.gd" id="3_n6cci"]
+[ext_resource type="Texture2D" uid="uid://b3haxr6f3bucl" path="res://assets/wall_right.png" id="4_sfu52"]
+[ext_resource type="Texture2D" uid="uid://dms73j6tft5eu" path="res://assets/wall_left.png" id="6_vsbsv"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ksjdw"]
+blend_mode = 1
+
+[sub_resource type="Animation" id="Animation_jaa7u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:use_parent_material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_oe4be"]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:use_parent_material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4t3wj"]
+_data = {
+"RESET": SubResource("Animation_jaa7u"),
+"hit": SubResource("Animation_oe4be")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x81fw"]
 size = Vector2(219.067, 69)
@@ -12,13 +57,25 @@ size = Vector2(157.5, 72.1679)
 size = Vector2(240.149, 83.587)
 
 [node name="walls" type="Node"]
-script = ExtResource("1_gk1k4")
 
 [node name="AreaWallCenter" type="Area2D" parent="."]
 position = Vector2(307, 555)
 rotation = -0.471239
 collision_layer = 19
 collision_mask = 2
+script = ExtResource("1_rgtk0")
+
+[node name="Sprite2D" type="Sprite2D" parent="AreaWallCenter"]
+material = SubResource("CanvasItemMaterial_ksjdw")
+use_parent_material = true
+position = Vector2(-0.891022, -0.453979)
+rotation = 0.46466
+texture = ExtResource("2_6co26")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AreaWallCenter/Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_4t3wj")
+}
 
 [node name="ColisionWallCenter" type="CollisionShape2D" parent="AreaWallCenter"]
 position = Vector2(-0.891018, -0.45401)
@@ -27,23 +84,47 @@ metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
 [node name="AreaWallRight" type="Area2D" parent="."]
+use_parent_material = true
 position = Vector2(473, 510)
 rotation = -0.150098
 collision_layer = 19
 collision_mask = 2
+script = ExtResource("2_6mwxn")
+
+[node name="Sprite2D" type="Sprite2D" parent="AreaWallRight"]
+position = Vector2(5.783, 1.88598)
+rotation = 0.1182
+texture = ExtResource("4_sfu52")
 
 [node name="ColisionWallRight" type="CollisionShape2D" parent="AreaWallRight"]
 position = Vector2(-1.13832, 0.839203)
 shape = SubResource("RectangleShape2D_bwl8t")
 metadata/_edit_lock_ = true
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AreaWallRight"]
+libraries = {
+"": SubResource("AnimationLibrary_4t3wj")
+}
+
 [node name="AreaWallLeft" type="Area2D" parent="."]
+use_parent_material = true
 position = Vector2(119, 668)
 rotation = -0.685914
 collision_layer = 19
 collision_mask = 2
+script = ExtResource("3_n6cci")
 metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="AreaWallLeft"]
+position = Vector2(-3.37628, -5.34796)
+rotation = 0.709865
+texture = ExtResource("6_vsbsv")
 
 [node name="ColisionWallLeft" type="CollisionShape2D" parent="AreaWallLeft"]
 shape = SubResource("RectangleShape2D_dbjtq")
 metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AreaWallLeft"]
+libraries = {
+"": SubResource("AnimationLibrary_4t3wj")
+}

@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://04gvsrrf3mix"]
 
-[ext_resource type="Texture2D" uid="uid://bid8al1ax388q" path="res://assets/background.png" id="1_561u7"]
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_bejen"]
 [ext_resource type="PackedScene" uid="uid://nm76qp1n6ikq" path="res://scenes/player.tscn" id="2_3n2to"]
 [ext_resource type="PackedScene" uid="uid://bd0iknyi0nlbe" path="res://scenes/zombie.tscn" id="2_bsm38"]
+[ext_resource type="Texture2D" uid="uid://lvk0tlm3e6uj" path="res://assets/background_no_walls.png" id="3_yx0gd"]
 [ext_resource type="PackedScene" uid="uid://ca2kbffbmnrl5" path="res://scenes/walls.tscn" id="5_fa8io"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b6rhq"]
@@ -26,13 +26,12 @@ func _ready():
 [node name="Game" type="Node2D"]
 position = Vector2(264, 386)
 script = ExtResource("1_bejen")
-wall = null
 Zombie = ExtResource("2_bsm38")
 
 [node name="background" type="Sprite2D" parent="."]
 position = Vector2(2.76004, -25.2)
 scale = Vector2(1.01393, 1.00222)
-texture = ExtResource("1_561u7")
+texture = ExtResource("3_yx0gd")
 metadata/_edit_lock_ = true
 
 [node name="player" parent="." instance=ExtResource("2_3n2to")]
