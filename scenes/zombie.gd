@@ -19,9 +19,6 @@ var zombie_strength = 8
 func _ready():
 	gravity = 0
 
-#func _process(delta):
-	#look_at(_target.position)
-
 func enemy_spawn(target, enemy_position: Vector2):
 	_target = target
 	look_at(target.position)
@@ -44,27 +41,23 @@ func _physics_process(delta):
 				
 				_on_game_wall_hit(colission_wall)
 			elif str(ray_cast.get_collider().name).to_lower().contains("player"):
-				#look_at(ray_cast.target_position)
 				_on_player_hit()
 	else:
-		if _target == null:
-			_target = get_parent().find_child("player")
-			
-			#print("player focus ==== " + str(_target))
-			
-			#rotation = position.angle_to(_target.position) + randf_range(-PI / 4, PI / 4)
-			var direction = (position.angle_to(_target.position)) + PI / 2
-			direction += randf_range(-PI / 4, PI / 4)
-			rotation = direction
-			#look_at(direction)
-			position.angle_to(_target.position.direction_to(position))
-			
-			#ray_cast.target_position = position.direction_to(_target.position)
-			#ray_cast.target_position = _target.position - position
-			
-			#print("raycast + " + str(ray_cast.get_collider().name).to_lower())
-			
-			$AnimatedSprite2D.animation = "move"
+		if get_parent().find_child("player") != null:
+			if _target == null:
+				_target = get_parent().find_child("player")
+				
+				var direction = (position.angle_to(_target.position)) + PI / 2
+				direction += randf_range(-PI / 4, PI / 4)
+				rotation = direction
+				position.angle_to(_target.position.direction_to(position))
+				
+				$AnimatedSprite2D.animation = "move"
+		else:
+			_target = self
+			set_process(false)
+			set_physics_process(false)
+			$AnimatedSprite2D.animation = "idle"
 		
 		print("player focus ==== " + str(_target))
 		
@@ -83,7 +76,6 @@ func _on_area_2d_body_entered(body):
 		var bullet: BulletClass = body
 		bullet.hit(self, body.position)
 		
-		#print("health " + str(health))
 		$AnimatedSprite2D/AnimationPlayer.play("hit")
 		
 		if health == 0:
@@ -91,9 +83,6 @@ func _on_area_2d_body_entered(body):
 
 
 func _on_game_wall_hit(wall):
-	#print("wall + " + str(wall_name.name))
-	#print("hit_cooldown_timer + " + str(hit_cooldown_timer.time_left))
-	
 	if hit_cooldown_timer.time_left < 0.7:
 		print("delay_hit_timer + " + str(delay_hit_timer.time_left))
 		delay_hit_timer.autostart = true
@@ -111,7 +100,6 @@ func _on_game_wall_hit(wall):
 			
 			if wall.health > 0:
 				wall.health - zombie_strength
-				print("wall hit = " + str(wall.health))
 				
 				hit_cooldown_timer.start()
 			else:
@@ -121,4 +109,6 @@ func _on_game_wall_hit(wall):
 
 func _on_player_hit():
 	print("player!!!")
+	var player = _target as PlayerClass
+	player.on_hit(zombie_strength)
 	$AnimatedSprite2D.animation = "attack"

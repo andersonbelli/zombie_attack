@@ -1,0 +1,114 @@
+[gd_scene load_steps=12 format=3 uid="uid://c1p8gw7ofext5"]
+
+[ext_resource type="Texture2D" uid="uid://ntqk6gqq0no" path="res://assets/game-over.png" id="1_2siir"]
+[ext_resource type="Texture2D" uid="uid://d2frwdsews6o6" path="res://assets/rect1.svg" id="2_4i00j"]
+[ext_resource type="Texture2D" uid="uid://oqsqqofwvuh2" path="res://assets/try_again_28_days_later.png" id="3_p818h"]
+[ext_resource type="Texture2D" uid="uid://bwjh725s8bvi8" path="res://assets/back.png" id="3_thp81"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_cyprh"]
+
+[sub_resource type="Animation" id="Animation_6wtwa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_lwok6"]
+resource_name = "game_over"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.4, 0.4), Vector2(0.55, 0.55)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jfbv2"]
+_data = {
+"RESET": SubResource("Animation_6wtwa"),
+"game_over": SubResource("Animation_lwok6")
+}
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ve2qc"]
+texture = ExtResource("2_4i00j")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hsmvq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_imb85"]
+
+[node name="game_over" type="CanvasLayer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.0117647, 0.0117647, 0.0117647, 0.4)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_cyprh")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(270, 154)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_2siir")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_jfbv2")
+}
+autoplay = "game_over"
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.0
+offset_top = -56.0
+offset_right = 851.0
+offset_bottom = 276.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.35, 0.35)
+theme_override_styles/normal = SubResource("StyleBoxTexture_ve2qc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hsmvq")
+icon = ExtResource("3_p818h")
+icon_alignment = 1
+
+[node name="Button2" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 96.0
+offset_right = 968.0
+offset_bottom = 631.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.12, 0.12)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxTexture_ve2qc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_imb85")
+icon = ExtResource("3_thp81")
+icon_alignment = 1

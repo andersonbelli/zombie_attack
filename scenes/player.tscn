@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://nm76qp1n6ikq"]
+[gd_scene load_steps=53 format=3 uid="uid://nm76qp1n6ikq"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_86w1n"]
 [ext_resource type="PackedScene" uid="uid://c3v0y6irmm2tu" path="res://scenes/bullet.tscn" id="2_xanfi"]
@@ -45,6 +45,13 @@
 [ext_resource type="Texture2D" uid="uid://cmakdkx1ql2dn" path="res://assets/Top_Down_Survivor/Top_Down_Survivor/rifle/shoot/survivor-shoot_rifle_0.png" id="43_2453c"]
 [ext_resource type="Texture2D" uid="uid://dj2h3dfpc1wgs" path="res://assets/Top_Down_Survivor/Top_Down_Survivor/rifle/shoot/survivor-shoot_rifle_1.png" id="44_s370t"]
 [ext_resource type="Texture2D" uid="uid://ds2f1vpc7mby5" path="res://assets/Top_Down_Survivor/Top_Down_Survivor/rifle/shoot/survivor-shoot_rifle_2.png" id="45_4lr3d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_trqe7"]
+radius = 31.0
+height = 186.043
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_w356o"]
+blend_mode = 1
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rowcj"]
 animations = [{
@@ -193,6 +200,67 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="Animation" id="Animation_3qbex"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:use_parent_material")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_r2k21"]
+resource_name = "hit_player"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0.105882, 0.105882, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".:use_parent_material")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_glo54"]
+_data = {
+"RESET": SubResource("Animation_3qbex"),
+"hit_player": SubResource("Animation_r2k21")
+}
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u2nwm"]
 radius = 79.4014
 height = 263.352
@@ -203,8 +271,15 @@ collision_mask = 3
 script = ExtResource("1_86w1n")
 Bullet = ExtResource("2_xanfi")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, 31)
+rotation = 1.54818
+shape = SubResource("CapsuleShape2D_trqe7")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 1
+z_index = 5
+material = SubResource("CanvasItemMaterial_w356o")
+use_parent_material = true
 scale = Vector2(0.70773, 0.707729)
 sprite_frames = SubResource("SpriteFrames_rowcj")
 animation = &"idle"
@@ -216,6 +291,11 @@ z_index = 1
 position = Vector2(84.7781, 32.4983)
 rotation = 1.5708
 scale = Vector2(1.41297, 1.41297)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_glo54")
+}
 
 [node name="AreaPlayer" type="Area2D" parent="."]
 

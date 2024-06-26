@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name GameClass
+
 enum WALLS {LEFT, CENTER, RIGHT}
 @export var wall: WALLS = WALLS.CENTER
 
@@ -12,11 +14,22 @@ enum WALLS {LEFT, CENTER, RIGHT}
 @onready var player: CharacterBody2D = $player
 @onready var spawn_timer = $spawn_timer
 @onready var path = $mob_spawn/PathFollow2D
+@onready var game_over = $game_over
 
 @export var Zombie: PackedScene
 var zombie: ZombieClass
 
 signal wall_hit
+
+func on_game_over():
+	#get_tree().paused = true
+	for node in get_tree().get_nodes_in_group("enemy_spawn"):
+		remove_child(node)
+	
+	
+func _on_player_on_die():
+	on_game_over()
+	game_over.visible = true
 
 func _on_spawn_timer_timeout():
 	zombie = Zombie.instantiate()

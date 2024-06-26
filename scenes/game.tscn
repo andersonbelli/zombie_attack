@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://04gvsrrf3mix"]
+[gd_scene load_steps=11 format=3 uid="uid://04gvsrrf3mix"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_bejen"]
 [ext_resource type="PackedScene" uid="uid://nm76qp1n6ikq" path="res://scenes/player.tscn" id="2_3n2to"]
 [ext_resource type="PackedScene" uid="uid://bd0iknyi0nlbe" path="res://scenes/zombie.tscn" id="2_bsm38"]
 [ext_resource type="Texture2D" uid="uid://lvk0tlm3e6uj" path="res://assets/background_no_walls.png" id="3_yx0gd"]
 [ext_resource type="PackedScene" uid="uid://ca2kbffbmnrl5" path="res://scenes/walls.tscn" id="5_fa8io"]
+[ext_resource type="PackedScene" uid="uid://c1p8gw7ofext5" path="res://scenes/game_over.tscn" id="6_rmluc"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b6rhq"]
 
@@ -30,13 +31,8 @@ Zombie = ExtResource("2_bsm38")
 
 [node name="walls" parent="." instance=ExtResource("5_fa8io")]
 
-[node name="background" type="Sprite2D" parent="."]
-position = Vector2(2.76004, -25.2)
-scale = Vector2(1.01393, 1.00222)
-texture = ExtResource("3_yx0gd")
-metadata/_edit_lock_ = true
-
 [node name="player" parent="." instance=ExtResource("2_3n2to")]
+use_parent_material = true
 position = Vector2(128, 203)
 rotation = -2.28464
 metadata/_edit_lock_ = true
@@ -59,16 +55,31 @@ position = Vector2(-150, -64)
 rotation = 1.5708
 shape = SubResource("WorldBoundaryShape2D_2mrmb")
 
-[node name="mob_spawn" type="Path2D" parent="."]
+[node name="mob_spawn" type="Path2D" parent="." groups=["enemy_spawn"]]
 curve = SubResource("Curve2D_mmslk")
 script = SubResource("GDScript_yufgh")
 
-[node name="PathFollow2D" type="PathFollow2D" parent="mob_spawn"]
+[node name="PathFollow2D" type="PathFollow2D" parent="mob_spawn" groups=["enemy_spawn"]]
 position = Vector2(-285, 115)
 rotation = -1.8636
 
-[node name="spawn_timer" type="Timer" parent="."]
+[node name="spawn_timer" type="Timer" parent="." groups=["enemy_spawn"]]
 wait_time = 3.0
 autostart = true
 
+[node name="background" type="Sprite2D" parent="."]
+show_behind_parent = true
+clip_children = 2
+light_mask = 0
+visibility_layer = 64
+position = Vector2(2.76004, -25.2)
+scale = Vector2(1.01393, 1.00222)
+texture = ExtResource("3_yx0gd")
+metadata/_edit_lock_ = true
+
+[node name="game_over" parent="." instance=ExtResource("6_rmluc")]
+visible = false
+follow_viewport_enabled = true
+
+[connection signal="on_die" from="player" to="." method="_on_player_on_die"]
 [connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]

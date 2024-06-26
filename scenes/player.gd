@@ -1,19 +1,23 @@
 extends CharacterBody2D
 
+class_name PlayerClass
+
+signal on_die
+
 @export var Bullet: PackedScene
 
 @onready var cooldown_timer = $cooldown
+@onready var animated_sprite_2d = $AnimatedSprite2D
 
 var bullet: BulletClass
 var bullet_speed = 1000
 
-#func _ready():
-	#bullet = Bullet.instantiate()
-#
-#func _physics_process(delta):
-	#bullet = Bullet.instantiate()
+var health = 100
 
 func _process(delta):
+	if Input.is_action_just_pressed("space_test"):
+		on_hit(8)
+	
 	var mouse_position = get_viewport().get_mouse_position()
 
 	look_at(mouse_position)
@@ -25,6 +29,10 @@ func _process(delta):
 			
 			shoot(mouse_position)
 
+func _on_cooldown_timeout():
+	$AnimatedSprite2D.animation = "idle"
+	cooldown_timer.stop()
+
 func shoot(mouse_position):
 	bullet = Bullet.instantiate()
 	
@@ -34,9 +42,17 @@ func shoot(mouse_position):
 	var direction = global_position.direction_to(mouse_position)
 	var impulse = direction * 100
 	bullet.add_constant_central_force(impulse)
-	#owner.add_child(bullet)
+	
 	add_child(bullet)
-
-func _on_cooldown_timeout():
-	$AnimatedSprite2D.animation = "idle"
-	cooldown_timer.stop()
+	
+func on_hit(damage: int):
+	if health <= 0:
+		queue_free()
+		#var game = get_parent() as GameClass
+		on_die.emit()
+	
+	health -= damage
+	
+	$AnimatedSprite2D/AnimationPlayer.play("hit_player")
+	
+	print("player health: " + str(health))
