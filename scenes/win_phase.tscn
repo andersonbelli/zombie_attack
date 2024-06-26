@@ -1,0 +1,91 @@
+[gd_scene load_steps=10 format=3 uid="uid://bgowcpv38hpij"]
+
+[ext_resource type="Texture2D" uid="uid://deg34bykyexkf" path="res://assets/morreu-geral.png" id="1_o2wpa"]
+[ext_resource type="Texture2D" uid="uid://d2frwdsews6o6" path="res://assets/rect1.svg" id="3_5t23n"]
+[ext_resource type="Texture2D" uid="uid://bmr04pnlu0k7g" path="res://assets/proxima-missao.png" id="3_shk26"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_cyprh"]
+
+[sub_resource type="Animation" id="Animation_6wtwa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_lwok6"]
+resource_name = "game_over"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.4, 0.4), Vector2(0.55, 0.55)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jfbv2"]
+_data = {
+"RESET": SubResource("Animation_6wtwa"),
+"game_over": SubResource("Animation_lwok6")
+}
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ve2qc"]
+texture = ExtResource("3_5t23n")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hsmvq"]
+
+[node name="win_phase" type="CanvasLayer"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.0117647, 0.0117647, 0.0117647, 0.4)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_cyprh")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(268, 252)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_o2wpa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_jfbv2")
+}
+autoplay = "game_over"
+
+[node name="ButtonTryAgain" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.0
+offset_top = 60.0
+offset_right = 851.0
+offset_bottom = 392.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.35, 0.35)
+theme_override_styles/normal = SubResource("StyleBoxTexture_ve2qc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_hsmvq")
+icon = ExtResource("3_shk26")
+icon_alignment = 1

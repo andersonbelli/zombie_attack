@@ -33,7 +33,7 @@ func _physics_process(delta):
 		if ray_cast.get_collider() != null:
 			var colission_target = ray_cast.get_collider()
 			
-			if str(ray_cast.get_collider().name).to_lower().contains("wall"):				
+			if str(ray_cast.get_collider().name).to_lower().contains("wall"):
 				if _target == null:
 					_target = colission_target
 					position.angle_to(_target.position.direction_to(position))

@@ -235,7 +235,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_carig"]
 radius = 37.6563
 
-[node name="zombie" type="CharacterBody2D"]
+[node name="zombie" type="CharacterBody2D" groups=["enemies"]]
 z_index = 4
 position = Vector2(234, 393)
 collision_layer = 2
