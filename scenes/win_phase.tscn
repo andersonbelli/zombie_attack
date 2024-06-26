@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bgowcpv38hpij"]
+[gd_scene load_steps=12 format=3 uid="uid://bgowcpv38hpij"]
 
 [ext_resource type="Texture2D" uid="uid://deg34bykyexkf" path="res://assets/morreu-geral.png" id="1_o2wpa"]
 [ext_resource type="Texture2D" uid="uid://d2frwdsews6o6" path="res://assets/rect1.svg" id="3_5t23n"]
@@ -49,6 +49,10 @@ texture = ExtResource("3_5t23n")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hsmvq"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0w5rb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_76ca4"]
+
 [node name="win_phase" type="CanvasLayer"]
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -87,5 +91,7 @@ grow_vertical = 2
 scale = Vector2(0.35, 0.35)
 theme_override_styles/normal = SubResource("StyleBoxTexture_ve2qc")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_hsmvq")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0w5rb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_76ca4")
 icon = ExtResource("3_shk26")
 icon_alignment = 1

@@ -17,35 +17,45 @@ enum WALLS {LEFT, CENTER, RIGHT}
 
 @onready var game_over: CanvasLayer = $game_over
 @onready var win_phase: CanvasLayer = $win_phase
+@onready var start_game: CanvasLayer = $start_game
 
 @export var Zombie: PackedScene
 var zombie: ZombieClass
-@export var remaning_zombies_phase := 1
+var remaning_zombies_phase := 1
+
+var game_started = false
 
 signal wall_hit
 
-func _on_game_over_on_try_again():
-	get_tree().reload_current_scene()
+func _ready():
+	start_game.visible = true
 
 func stop_enemy_spawn():
 	if not get_tree().get_nodes_in_group("enemy_spawn").is_empty():
 		for node in get_tree().get_nodes_in_group("enemy_spawn"):
 			node.queue_free()
-
-func _on_player_on_die():
-	stop_enemy_spawn()
-	game_over.visible = true
-
-func on_win_phase():
+			
+func verify_win_phase():
 	if remaning_zombies_phase == 0 and get_tree().get_nodes_in_group("enemies").is_empty():
 		stop_enemy_spawn()
 		win_phase.visible = true
 
 func _physics_process(delta):
-	on_win_phase()
+	verify_win_phase()
+
+func _on_start_game_on_start_game():
+	game_started = true
+	start_game.visible = false
+
+func _on_game_over_on_try_again():
+	get_tree().reload_current_scene()
+
+func _on_player_on_die():
+	stop_enemy_spawn()
+	game_over.visible = true
 
 func _on_spawn_timer_timeout():
-	if remaning_zombies_phase > 0:
+	if game_started and remaning_zombies_phase > 0:
 		zombie = Zombie.instantiate()
 		
 		path.progress = randf()

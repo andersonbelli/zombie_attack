@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://04gvsrrf3mix"]
+[gd_scene load_steps=13 format=3 uid="uid://04gvsrrf3mix"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_bejen"]
 [ext_resource type="PackedScene" uid="uid://nm76qp1n6ikq" path="res://scenes/player.tscn" id="2_3n2to"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ca2kbffbmnrl5" path="res://scenes/walls.tscn" id="5_fa8io"]
 [ext_resource type="PackedScene" uid="uid://c1p8gw7ofext5" path="res://scenes/game_over.tscn" id="6_rmluc"]
 [ext_resource type="PackedScene" uid="uid://bgowcpv38hpij" path="res://scenes/win_phase.tscn" id="7_80spj"]
+[ext_resource type="PackedScene" uid="uid://ccd8bejkrd4pc" path="res://scenes/start_game.tscn" id="8_ild4n"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b6rhq"]
 
@@ -85,6 +86,10 @@ follow_viewport_enabled = true
 [node name="win_phase" parent="." instance=ExtResource("7_80spj")]
 visible = false
 
+[node name="start_game" parent="." instance=ExtResource("8_ild4n")]
+visible = false
+
 [connection signal="on_die" from="player" to="." method="_on_player_on_die"]
 [connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="on_try_again" from="game_over" to="." method="_on_game_over_on_try_again"]
+[connection signal="on_start_game" from="start_game" to="." method="_on_start_game_on_start_game"]
