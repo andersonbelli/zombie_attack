@@ -31,15 +31,14 @@ func _physics_process(delta):
 	
 	if ray_cast.is_colliding():
 		if ray_cast.get_collider() != null:
-			#print("raycast + " + str(ray_cast.get_collider().name).to_lower())
+			var colission_target = ray_cast.get_collider()
 			
-			if str(ray_cast.get_collider().name).to_lower().contains("wall"):
-				var colission_wall = ray_cast.get_collider()
+			if str(ray_cast.get_collider().name).to_lower().contains("wall"):				
 				if _target == null:
-					_target = colission_wall
+					_target = colission_target
 					position.angle_to(_target.position.direction_to(position))
 				
-				_on_game_wall_hit(colission_wall)
+				_on_game_wall_hit(colission_target)
 			elif str(ray_cast.get_collider().name).to_lower().contains("player"):
 				_on_player_hit()
 	else:
@@ -59,7 +58,6 @@ func _physics_process(delta):
 			set_physics_process(false)
 			$AnimatedSprite2D.animation = "idle"
 		
-		print("player focus ==== " + str(_target))
 		
 		position -= _target.position.direction_to(position)
 		velocity = move_strength * position.direction_to(_target.position)
@@ -84,7 +82,6 @@ func _on_area_2d_body_entered(body):
 
 func _on_game_wall_hit(wall):
 	if hit_cooldown_timer.time_left < 0.7:
-		print("delay_hit_timer + " + str(delay_hit_timer.time_left))
 		delay_hit_timer.autostart = true
 		
 		if delay_hit_timer.time_left < 1:
@@ -108,7 +105,6 @@ func _on_game_wall_hit(wall):
 				wall.queue_free()
 
 func _on_player_hit():
-	print("player!!!")
 	var player = _target as PlayerClass
 	player.on_hit(zombie_strength)
 	$AnimatedSprite2D.animation = "attack"
