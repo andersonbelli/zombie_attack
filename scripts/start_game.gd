@@ -2,5 +2,9 @@ extends CanvasLayer
 
 signal on_start_game
 
-func _on_button_try_again_pressed():
+@onready var start_music = $start_music
+
+func _on_button_start_game_pressed():
+	start_music.stop()
+	
 	on_start_game.emit()

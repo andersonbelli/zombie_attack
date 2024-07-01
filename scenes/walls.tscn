@@ -60,13 +60,15 @@ size = Vector2(240.149, 83.587)
 
 [node name="AreaWallCenter" type="Area2D" parent="."]
 z_index = 2
-position = Vector2(304, 556)
+position = Vector2(451, 1009)
 rotation = -0.471239
 collision_layer = 19
 collision_mask = 2
 script = ExtResource("1_rgtk0")
 
 [node name="Sprite2D" type="Sprite2D" parent="AreaWallCenter"]
+light_mask = 16
+visibility_layer = 16
 material = SubResource("CanvasItemMaterial_ksjdw")
 use_parent_material = true
 position = Vector2(-0.891022, -0.453979)
@@ -86,13 +88,15 @@ metadata/_edit_group_ = true
 [node name="AreaWallRight" type="Area2D" parent="."]
 z_index = 2
 use_parent_material = true
-position = Vector2(470, 511)
+position = Vector2(617, 964)
 rotation = -0.150098
 collision_layer = 19
 collision_mask = 2
 script = ExtResource("2_6mwxn")
 
 [node name="Sprite2D" type="Sprite2D" parent="AreaWallRight"]
+light_mask = 16
+visibility_layer = 16
 material = SubResource("CanvasItemMaterial_ksjdw")
 use_parent_material = true
 position = Vector2(5.09332, -0.241068)
@@ -112,7 +116,7 @@ shape = SubResource("RectangleShape2D_bwl8t")
 [node name="AreaWallLeft" type="Area2D" parent="."]
 z_index = 2
 use_parent_material = true
-position = Vector2(116, 669)
+position = Vector2(263, 1122)
 rotation = -0.685914
 collision_layer = 19
 collision_mask = 2

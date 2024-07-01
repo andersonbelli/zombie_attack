@@ -13,7 +13,10 @@ enum WALLS {LEFT, CENTER, RIGHT}
 @onready var path = $mob_spawn/PathFollow2D
 @onready var mob_path = $mob_spawn/PathFollow2D
 
-@onready var player: CharacterBody2D = $player
+@onready var game_music = $game_music
+
+@onready var player_node = $player_node
+@onready var player: CharacterBody2D = $player_node/player
 
 @onready var game_over: CanvasLayer = $game_over
 @onready var win_phase: CanvasLayer = $win_phase
@@ -21,14 +24,11 @@ enum WALLS {LEFT, CENTER, RIGHT}
 
 @export var Zombie: PackedScene
 var zombie: ZombieClass
-var remaning_zombies_phase := 1
+var remaning_zombies_phase := 8
 
 var game_started = false
 
 signal wall_hit
-
-func _ready():
-	start_game.visible = true
 
 func stop_enemy_spawn():
 	if not get_tree().get_nodes_in_group("enemy_spawn").is_empty():
@@ -46,13 +46,19 @@ func _physics_process(delta):
 func _on_start_game_on_start_game():
 	game_started = true
 	start_game.visible = false
+	game_music.play()
 
 func _on_game_over_on_try_again():
 	get_tree().reload_current_scene()
 
 func _on_player_on_die():
+	print("morreu :D")
 	stop_enemy_spawn()
 	game_over.visible = true
+
+func _ready():
+	player.connect("on_die", _on_player_on_die)
+	start_game.visible = true
 
 func _on_spawn_timer_timeout():
 	if game_started and remaning_zombies_phase > 0:
@@ -61,7 +67,7 @@ func _on_spawn_timer_timeout():
 		path.progress = randf()
 		zombie.position = path.position
 		
-		var target = wall_center
+		var target = player
 		var wall_to_attack = randi_range(0, 2)
 		
 		wall = wall_to_attack

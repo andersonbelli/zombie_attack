@@ -8,6 +8,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var ray_cast = $Area2D/CollisionShape2D/RayCast2D
 @onready var hit_cooldown_timer = $HitCooldownTimer
 @onready var delay_hit_timer = $DelayHitTimer
+@onready var enemy_hit_sfx = $enemy_hit_sfx
 
 var _target
 var _enemy_position: Vector2
@@ -40,6 +41,9 @@ func _physics_process(delta):
 				
 				_on_game_wall_hit(colission_target)
 			elif str(ray_cast.get_collider().name).to_lower().contains("player"):
+				print(ray_cast.get_collider())
+				_target = get_parent().get_node("player_node").get_node("player")
+				
 				_on_player_hit()
 	else:
 		if get_parent().find_child("player") != null:
@@ -58,7 +62,6 @@ func _physics_process(delta):
 			set_physics_process(false)
 			$AnimatedSprite2D.animation = "idle"
 		
-		
 		position -= _target.position.direction_to(position)
 		velocity = move_strength * position.direction_to(_target.position)
 		
@@ -75,6 +78,7 @@ func _on_area_2d_body_entered(body):
 		bullet.hit(self, body.position)
 		
 		$AnimatedSprite2D/AnimationPlayer.play("hit")
+		enemy_hit_sfx.play()
 		
 		if health == 0:
 			queue_free()

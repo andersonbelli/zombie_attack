@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgowcpv38hpij"]
+[gd_scene load_steps=13 format=3 uid="uid://bgowcpv38hpij"]
 
 [ext_resource type="Texture2D" uid="uid://deg34bykyexkf" path="res://assets/morreu-geral.png" id="1_o2wpa"]
+[ext_resource type="FontFile" uid="uid://c052t6xvrxtue" path="res://assets/fonts/28 Days Later.ttf" id="2_e1h5b"]
 [ext_resource type="Texture2D" uid="uid://d2frwdsews6o6" path="res://assets/rect1.svg" id="3_5t23n"]
-[ext_resource type="Texture2D" uid="uid://bmr04pnlu0k7g" path="res://assets/proxima-missao.png" id="3_shk26"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_cyprh"]
 
@@ -44,8 +44,20 @@ _data = {
 "game_over": SubResource("Animation_lwok6")
 }
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lcn3m"]
+content_margin_top = 65.0
+content_margin_bottom = 65.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ve2qc"]
 texture = ExtResource("3_5t23n")
+texture_margin_left = 25.0
+texture_margin_top = 15.0
+texture_margin_right = 25.0
+texture_margin_bottom = 15.0
+expand_margin_left = 25.0
+expand_margin_top = 25.0
+expand_margin_right = 25.0
+expand_margin_bottom = 25.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hsmvq"]
 
@@ -62,36 +74,75 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(271, 379)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = SubResource("CanvasTexture_cyprh")
-metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(268, 252)
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(364, 651)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_right = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(512, 620)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Control/VBoxContainer"]
+visible = false
+position = Vector2(363, 391)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_o2wpa")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+[node name="TextureRect" type="TextureRect" parent="Control/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_o2wpa")
+expand_mode = 5
+stretch_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/VBoxContainer/TextureRect"]
 libraries = {
 "": SubResource("AnimationLibrary_jfbv2")
 }
 autoplay = "game_over"
 
-[node name="ButtonTryAgain" type="Button" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -173.0
-offset_top = 60.0
-offset_right = 851.0
-offset_bottom = 392.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.35, 0.35)
+[node name="Label" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_e1h5b")
+theme_override_font_sizes/font_size = 57
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lcn3m")
+text = "Muito bem soldado!"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="ButtonTryAgain" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("2_e1h5b")
+theme_override_font_sizes/font_size = 70
 theme_override_styles/normal = SubResource("StyleBoxTexture_ve2qc")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_hsmvq")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_0w5rb")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_76ca4")
-icon = ExtResource("3_shk26")
+text = "PROXIMA MISSAO"
 icon_alignment = 1

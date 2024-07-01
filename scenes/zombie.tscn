@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://bd0iknyi0nlbe"]
+[gd_scene load_steps=53 format=3 uid="uid://bd0iknyi0nlbe"]
 
 [ext_resource type="Texture2D" uid="uid://datqrkcbhty2q" path="res://assets/tds_zombie/export/skeleton-attack_0.png" id="1_0cmid"]
 [ext_resource type="Script" path="res://scenes/zombie.gd" id="1_bn65h"]
@@ -44,6 +44,7 @@
 [ext_resource type="Texture2D" uid="uid://cddth5fwlwhbf" path="res://assets/tds_zombie/export/skeleton-move_14.png" id="41_m6gt7"]
 [ext_resource type="Texture2D" uid="uid://dvxsgi45ysqin" path="res://assets/tds_zombie/export/skeleton-move_15.png" id="42_02d1e"]
 [ext_resource type="Texture2D" uid="uid://dv0ictvuir6wo" path="res://assets/tds_zombie/export/skeleton-move_16.png" id="43_c0t5u"]
+[ext_resource type="AudioStream" uid="uid://4wxgvy4naelb" path="res://assets/audios/single_hit2.mp3" id="45_f5x0x"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mcbnx"]
 blend_mode = 1
@@ -232,6 +233,9 @@ _data = {
 "hit": SubResource("Animation_oe4be")
 }
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_g1g65"]
+polygon = PackedVector2Array(-32, -45, -164, 3, -36, 65, -71, 25, -71, -8)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_carig"]
 radius = 37.6563
 
@@ -257,6 +261,11 @@ libraries = {
 "": SubResource("AnimationLibrary_4t3wj")
 }
 
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2(23, -5)
+occluder = SubResource("OccluderPolygon2D_g1g65")
+occluder_light_mask = 64
+
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 6
 collision_mask = 20
@@ -281,5 +290,10 @@ wait_time = 3.0
 
 [node name="DelayHitTimer" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="enemy_hit_sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("45_f5x0x")
+pitch_scale = 0.84
+bus = &"enemy_hit_sfx"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

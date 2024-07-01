@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://04gvsrrf3mix"]
+[gd_scene load_steps=18 format=3 uid="uid://04gvsrrf3mix"]
 
 [ext_resource type="Script" path="res://scenes/game.gd" id="1_bejen"]
 [ext_resource type="PackedScene" uid="uid://nm76qp1n6ikq" path="res://scenes/player.tscn" id="2_3n2to"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://c1p8gw7ofext5" path="res://scenes/game_over.tscn" id="6_rmluc"]
 [ext_resource type="PackedScene" uid="uid://bgowcpv38hpij" path="res://scenes/win_phase.tscn" id="7_80spj"]
 [ext_resource type="PackedScene" uid="uid://ccd8bejkrd4pc" path="res://scenes/start_game.tscn" id="8_ild4n"]
+[ext_resource type="Texture2D" uid="uid://dn0thkphkqv01" path="res://assets/background_no_walls1.png" id="9_15kdx"]
+[ext_resource type="AudioStream" uid="uid://cqdrebovvcco3" path="res://assets/audios/GAME_music.mp3" id="10_qqsy5"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_b6rhq"]
 
@@ -15,7 +17,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_mmslk"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -285, 115, 0, 0, 0, 0, -367, -157, 0, 0, 0, 0, -299, -403, 0, 0, 0, 0, 9, -445, 0, 0, 0, 0, 279, -423, 0, 0, 0, 0, 289, -421, 0, 0, 0, 0, 297, -289)
+"points": PackedVector2Array(0, 0, 0, 0, -341, -32, 0, 0, 0, 0, -367, -157, 0, 0, 0, 0, -299, -403, 0, 0, 0, 0, 9, -445, 0, 0, 0, 0, 279, -423, 0, 0, 0, 0, 466, -423, 0, 0, 0, 0, 525, -146)
 }
 point_count = 7
 
@@ -26,22 +28,63 @@ func _ready():
 	print(\"start nene\")
 "
 
+[sub_resource type="Environment" id="Environment_y53y3"]
+background_mode = 3
+ambient_light_source = 1
+tonemap_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 1.18
+glow_strength = 0.94
+glow_bloom = 0.17
+glow_blend_mode = 0
+fog_enabled = true
+fog_light_energy = 1.46
+fog_sun_scatter = 0.05
+fog_density = 0.0576
+fog_sky_affect = 0.781
+fog_height = 97.52
+fog_height_density = 3.3524
+adjustment_enabled = true
+adjustment_brightness = 0.85
+adjustment_saturation = 1.53
+
+[sub_resource type="Gradient" id="Gradient_fyjjo"]
+interpolation_mode = 2
+colors = PackedColorArray(0.820366, 0.820366, 0.820366, 1, 0, 0, 0, 0.933333)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ctp12"]
+gradient = SubResource("Gradient_fyjjo")
+width = 700
+height = 1200
+fill = 1
+fill_from = Vector2(0.547009, 0.396011)
+fill_to = Vector2(0.0879121, 0.037037)
+
 [node name="Game" type="Node2D"]
+light_mask = 64
+visibility_layer = 64
 position = Vector2(264, 386)
 script = ExtResource("1_bejen")
 Zombie = ExtResource("2_bsm38")
 
+[node name="background" type="Sprite2D" parent="."]
+visible = false
+show_behind_parent = true
+clip_children = 2
+light_mask = 0
+visibility_layer = 64
+position = Vector2(220.499, 253.5)
+scale = Vector2(1.82037, 1.77639)
+texture = ExtResource("3_yx0gd")
+metadata/_edit_group_ = true
+
 [node name="walls" parent="." instance=ExtResource("5_fa8io")]
 
-[node name="player" parent="." instance=ExtResource("2_3n2to")]
-use_parent_material = true
-position = Vector2(128, 203)
-rotation = -2.28464
-metadata/_edit_lock_ = true
+[node name="player_node" parent="." instance=ExtResource("2_3n2to")]
 
 [node name="world" type="StaticBody2D" parent="."]
-position = Vector2(34, 301)
-metadata/_edit_lock_ = true
+position = Vector2(218, 863)
 
 [node name="collision_wall_bottom" type="CollisionShape2D" parent="world"]
 position = Vector2(22, 33)
@@ -62,22 +105,12 @@ curve = SubResource("Curve2D_mmslk")
 script = SubResource("GDScript_yufgh")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="mob_spawn" groups=["enemy_spawn"]]
-position = Vector2(-285, 115)
-rotation = -1.8636
+position = Vector2(-341, -32)
+rotation = -1.77587
 
 [node name="spawn_timer" type="Timer" parent="." groups=["enemy_spawn"]]
 wait_time = 3.0
 autostart = true
-
-[node name="background" type="Sprite2D" parent="."]
-show_behind_parent = true
-clip_children = 2
-light_mask = 0
-visibility_layer = 64
-position = Vector2(2.76004, -25.2)
-scale = Vector2(1.01393, 1.00222)
-texture = ExtResource("3_yx0gd")
-metadata/_edit_lock_ = true
 
 [node name="game_over" parent="." instance=ExtResource("6_rmluc")]
 visible = false
@@ -89,7 +122,44 @@ visible = false
 [node name="start_game" parent="." instance=ExtResource("8_ild4n")]
 visible = false
 
-[connection signal="on_die" from="player" to="." method="_on_player_on_die"]
+[node name="TextureRect" type="TextureRect" parent="."]
+light_mask = 65
+visibility_layer = 64
+clip_contents = true
+offset_left = -267.0
+offset_top = -384.0
+offset_right = 459.0
+offset_bottom = 894.0
+size_flags_horizontal = 6
+size_flags_vertical = 3
+texture = ExtResource("9_15kdx")
+expand_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_y53y3")
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+position = Vector2(20, 287)
+color = Color(0.0911374, 0.133981, 0.324721, 1)
+energy = 0.95
+blend_mode = 2
+range_item_cull_mask = 66
+shadow_enabled = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(402, 825)
+scale = Vector2(1.09143, 1.08)
+energy = 1.43
+shadow_enabled = true
+shadow_item_cull_mask = 64
+texture = SubResource("GradientTexture2D_ctp12")
+offset = Vector2(-301.44, -538.889)
+height = 10.0
+
+[node name="game_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_qqsy5")
+bus = &"music"
+
 [connection signal="timeout" from="spawn_timer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="on_try_again" from="game_over" to="." method="_on_game_over_on_try_again"]
 [connection signal="on_start_game" from="start_game" to="." method="_on_start_game_on_start_game"]

@@ -17,8 +17,11 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=540
-window/size/viewport_height=720
+window/size/viewport_width=720
+window/size/viewport_height=1280
+window/size/mode=2
+window/size/initial_position_type=0
+window/stretch/mode="viewport"
 window/handheld/orientation=1
 
 [input]
@@ -34,6 +37,10 @@ space_test={
 ]
 }
 
+[internationalization]
+
+locale/fallback="pt_BR"
+
 [layer_names]
 
 2d_physics/layer_1="character"
@@ -45,3 +52,6 @@ space_test={
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.15967, 0.15967, 0.15967, 1)
+viewport/hdr_2d=true

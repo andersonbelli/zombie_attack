@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://vg4j1rq6r8s8"
+path="res://.godot/imported/ZOMBIE_START_GAME_ethereal drum_recorded.wav-6f0567aca65045f8b9838f50cbabf436.sample"
+
+[deps]
+
+source_file="res://assets/audios/ZOMBIE_START_GAME_ethereal drum_recorded.wav"
+dest_files=["res://.godot/imported/ZOMBIE_START_GAME_ethereal drum_recorded.wav-6f0567aca65045f8b9838f50cbabf436.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

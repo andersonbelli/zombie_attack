@@ -4,4 +4,3 @@ extends WallsClass
 
 func on_hit():
 	animation_player.play("hit")
-	print("HIT ON RIGHT WALL!!")

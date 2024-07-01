@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ntqk6gqq0no" path="res://assets/game-over.png" id="1_2siir"]
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_8qq7b"]
 [ext_resource type="Texture2D" uid="uid://d2frwdsews6o6" path="res://assets/rect1.svg" id="2_4i00j"]
-[ext_resource type="Texture2D" uid="uid://oqsqqofwvuh2" path="res://assets/try_again_28_days_later.png" id="3_p818h"]
+[ext_resource type="FontFile" uid="uid://c052t6xvrxtue" path="res://assets/fonts/28 Days Later.ttf" id="3_mjx4v"]
 [ext_resource type="Texture2D" uid="uid://bwjh725s8bvi8" path="res://assets/back.png" id="3_thp81"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_cyprh"]
@@ -67,7 +67,7 @@ texture = SubResource("CanvasTexture_cyprh")
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(270, 154)
+position = Vector2(358, 323)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_2siir")
 
@@ -83,19 +83,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -173.0
-offset_top = -56.0
-offset_right = 851.0
-offset_bottom = 276.0
+offset_left = -210.5
+offset_top = -74.0
+offset_right = 210.5
+offset_bottom = 74.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.35, 0.35)
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("3_mjx4v")
+theme_override_font_sizes/font_size = 47
 theme_override_styles/normal = SubResource("StyleBoxTexture_ve2qc")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_hsmvq")
-icon = ExtResource("3_p818h")
+text = "tentar de novo"
 icon_alignment = 1
 
 [node name="ButtonBack" type="Button" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
